@@ -5,20 +5,36 @@ import javax.swing.*;
 public class GameJFrame extends JFrame {
 	public GameJFrame() {
 		initJFrame();
+		
 		initJMenuBar();
+		
+		initImage();
+		
 		setVisible(true);
 	}
 	
-	public void initJFrame() {
+	private void initImage() {
+		int number = 1;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				JLabel jLabel = new JLabel(new ImageIcon("G:\\MyProject\\puzzlegame\\image\\image\\animal\\animal3\\" + number + ".jpg"));
+				jLabel.setBounds(105 * j, 105 * i, 105, 105);
+				this.getContentPane().add(jLabel);
+				number++;
+			}
+		}
+	}
+	
+	private  void initJFrame() {
 		setSize(603, 680);
 		this.setTitle("拼图单机版 v1.0");
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+		this.setLayout(null);
 	}
 	
-	public void initJMenuBar() {
+	private void initJMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu functionMenu = new JMenu("功能");
