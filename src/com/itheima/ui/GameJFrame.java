@@ -1,31 +1,50 @@
 package com.itheima.ui;
 
 import javax.swing.*;
+import java.util.Random;
 
 public class GameJFrame extends JFrame {
+	int[][] data = new int[4][4];
 	public GameJFrame() {
 		initJFrame();
 		
 		initJMenuBar();
+		
+		initData();
 		
 		initImage();
 		
 		setVisible(true);
 	}
 	
+	private void initData() {
+		int[] temp = new int[16];
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = i + 1;
+		}
+		Random r = new Random();
+		for (int i = 0; i < temp.length; i++) {
+			int next = r.nextInt(temp.length);
+			int temp1 = temp[next];
+			temp[next] = temp[i];
+			temp[i] = temp1;
+		}
+		for (int i = 0; i < temp.length; i++) {
+			data[i / 4][i % 4] = temp[i];
+		}
+	}
+	
 	private void initImage() {
-		int number = 1;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				JLabel jLabel = new JLabel(new ImageIcon("G:\\MyProject\\puzzlegame\\image\\image\\animal\\animal3\\" + number + ".jpg"));
+				JLabel jLabel = new JLabel(new ImageIcon("G:\\MyProject\\puzzlegame\\image\\image\\animal\\animal3\\" + data[i][j] + ".jpg"));
 				jLabel.setBounds(105 * j, 105 * i, 105, 105);
 				this.getContentPane().add(jLabel);
-				number++;
 			}
 		}
 	}
 	
-	private  void initJFrame() {
+	private void initJFrame() {
 		setSize(603, 680);
 		this.setTitle("拼图单机版 v1.0");
 		this.setAlwaysOnTop(true);
