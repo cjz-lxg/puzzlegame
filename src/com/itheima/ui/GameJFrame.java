@@ -1,10 +1,12 @@
 package com.itheima.ui;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.util.Random;
 
 public class GameJFrame extends JFrame {
 	int[][] data = new int[4][4];
+	
 	public GameJFrame() {
 		initJFrame();
 		
@@ -35,13 +37,20 @@ public class GameJFrame extends JFrame {
 	}
 	
 	private void initImage() {
+		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				JLabel jLabel = new JLabel(new ImageIcon("G:\\MyProject\\puzzlegame\\image\\image\\animal\\animal3\\" + data[i][j] + ".jpg"));
-				jLabel.setBounds(105 * j, 105 * i, 105, 105);
+				JLabel jLabel = new JLabel(new ImageIcon("image\\image\\animal\\animal3\\" + data[i][j] + ".jpg"));
+				jLabel.setBounds(105 * j + 83, 105 * i + 134, 105, 105);
+				jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 				this.getContentPane().add(jLabel);
 			}
 		}
+		
+		JLabel background = new JLabel(new ImageIcon("image\\image\\background.png"));
+		background.setBounds(40, 40, 508, 560);
+		this.getContentPane().add(background);
+		
 	}
 	
 	private void initJFrame() {
