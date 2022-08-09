@@ -2,10 +2,15 @@ package com.itheima.ui;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
-public class GameJFrame extends JFrame {
+public class GameJFrame extends JFrame implements KeyListener{
 	int[][] data = new int[4][4];
+	
+	int x , y;
 	
 	public GameJFrame() {
 		initJFrame();
@@ -17,6 +22,7 @@ public class GameJFrame extends JFrame {
 		initImage();
 		
 		setVisible(true);
+		
 	}
 	
 	private void initData() {
@@ -24,6 +30,7 @@ public class GameJFrame extends JFrame {
 		for (int i = 0; i < temp.length; i++) {
 			temp[i] = i + 1;
 		}
+		temp[15] = 16;
 		Random r = new Random();
 		for (int i = 0; i < temp.length; i++) {
 			int next = r.nextInt(temp.length);
@@ -32,11 +39,17 @@ public class GameJFrame extends JFrame {
 			temp[i] = temp1;
 		}
 		for (int i = 0; i < temp.length; i++) {
+			if (temp[i] == 16) {
+				x = i % 4;
+				y = i / 4;
+			}
 			data[i / 4][i % 4] = temp[i];
 		}
 	}
 	
 	private void initImage() {
+		
+		this.getContentPane().removeAll();
 		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -51,6 +64,7 @@ public class GameJFrame extends JFrame {
 		background.setBounds(40, 40, 508, 560);
 		this.getContentPane().add(background);
 		
+		this.getContentPane().repaint();
 	}
 	
 	private void initJFrame() {
@@ -60,6 +74,7 @@ public class GameJFrame extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setLayout(null);
+		this.addKeyListener(this);
 	}
 	
 	private void initJMenuBar() {
@@ -86,4 +101,55 @@ public class GameJFrame extends JFrame {
 		setJMenuBar(menuBar);
 	}
 	
+	@Override
+	public void keyTyped(KeyEvent e) {
+	
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+	
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if (code == 37) {
+			if (x <= 0) {
+				return;
+			}
+			data[y][x] = data[y][x - 1];
+			data[y][x - 1] = 16;
+			x--;
+			initImage();
+			System.out.println("向左移动");
+		} else if (code == 38) {
+			if (y <= 0) {
+				return;
+			}
+			data[y][x] = data[y - 1][x];
+			data[y - 1][x] = 0;
+			y--;
+			initImage();
+			System.out.println("向上移动");
+		} else if (code == 39) {
+			if (x >= data.length-1) {
+				return;
+			}
+			data[y][x] = data[y][x + 1];
+			data[y][x + 1] = 16;
+			x++;
+			initImage();
+			System.out.println("向右移动");
+		} else if (code == 40) {
+			if (y >= data[0].length - 1) {
+				return;
+			}
+			data[y][x] = data[y + 1][x];
+			data[y + 1][x] = 0;
+			y++;
+			initImage();
+			System.out.println("向下移动");
+		}
+	}
 }
